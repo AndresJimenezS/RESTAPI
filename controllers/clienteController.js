@@ -39,3 +39,28 @@ exports.mostrarCliente = async (req, res, next) => {
         next();
     }
 }
+
+
+// Actualiza cliente
+exports.actualizarCliente = async (req, res, next) => {
+    try{
+        const cliente = await Clientes.findOneAndUpdate({ _id : req.params.idCliente }, req.body, { new: true }) // este callback es true porque trae el nuevo
+        res.json(cliente);
+    }catch(error){
+        console.log(error);
+        next();
+    }
+}
+
+
+// Elimina cliente según su id
+exports.eliminarCliente = async (req, res, next) => {
+    try {
+        // este es el más recomendado de mongoose
+        await Clientes.findOneAndDelete({ _id: req.params.idCliente });
+        res.json({ mensaje: 'Eliminado Correctamente' });
+    } catch (error) {
+        console.log(error);
+        next();
+    }
+}

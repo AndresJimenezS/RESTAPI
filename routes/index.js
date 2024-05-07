@@ -13,5 +13,11 @@ module.exports = function(){
     // Muestra un cliente en específico
     router.get('/clientes/:idCliente', clienteController.mostrarCliente)
 
+    // Actualizar cliente
+    router.put('/clientes/:idCliente', clienteController.actualizarCliente);
+
+    // Eliminar cliente
+    router.delete('/clientes/:idCliente', clienteController.eliminarCliente);
+
     return router;
 }
