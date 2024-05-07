@@ -44,7 +44,7 @@ exports.mostrarCliente = async (req, res, next) => {
 // Actualiza cliente
 exports.actualizarCliente = async (req, res, next) => {
     try{
-        const cliente = await Clientes.findOneAndUpdate({ _id : req.params.idCliente }, req.body, { new: true }) // este callback es true porque trae el nuevo
+        const cliente = await Clientes.findOneAndUpdate({ _id : req.params.idCliente }, req.body, { new: true }) // este callback es true porque retorna el nuevo obj
         res.json(cliente);
     }catch(error){
         console.log(error);

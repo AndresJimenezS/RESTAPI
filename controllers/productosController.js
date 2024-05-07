@@ -57,3 +57,60 @@ exports.nuevoProducto = async (req, res, next) => {
         next();
     }
 }
+
+
+// muestra todos los productos
+exports.mostrarProductos = async (req, res, next) => {
+    try {
+        const productos = await Productos.find({});
+        res.json(productos);
+    } catch (error) {
+        console.log(error);
+        next();
+    }
+}
+
+
+// muestra un producto es específico
+exports.mostrarProducto = async (req, res, next) => {
+    try {
+        const producto = await Productos.findById(req.params.idProducto);
+        res.json(producto);
+    } catch (error) {
+        res.json({mensaje: 'Error al obtener producto'});
+        next();
+    }
+}
+
+
+// actualizar producto
+exports.actualizarProducto = async (req, res, next) => {
+    try {
+        let nuevoProducto = req.body; //construir un nuevo producto
+
+        if(req.file){
+            nuevoProducto.imagen = req.file.filename;
+        }else{
+            let productoAnterior = await Productos.findById(req.params.idProducto);
+            nuevoProducto.imagen = productoAnterior.imagen;
+        }
+
+        let product = await Productos.findOneAndUpdate({_id : req.params.idProducto}, nuevoProducto, { new: true});
+        res.json(product);
+    } catch (error) {
+        console.log(error);
+        next();
+    }
+}
+
+
+// eliminar productos
+exports.eliminarProducto = async (req, res, next) => {
+    try {
+        await Productos.findOneAndDelete({_id: req.params.idProducto});
+        res.json({mensaje: 'Producto Eliminado Correctamente'})
+    } catch (error) {
+        console.log(error);
+        next();
+    }
+}
