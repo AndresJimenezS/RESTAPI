@@ -3,6 +3,8 @@ const routes = require('./routes')
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
+// Cors permite que un cliente se conecte a otro servidor para intercambiar recursos
+const cors = require('cors');
 
 // Conectar Mongo
 mongoose.Promise = global.Promise;
@@ -17,6 +19,9 @@ const app = express();
 // habilitar BODYPARSER
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
+
+// habilitar cors
+app.use(cors());
 
 // Rutas del app
 app.use('/', routes());
