@@ -11,7 +11,7 @@ exports.nuevoCliente = async (req, res, next) => {
         res.json({ mensaje: 'Se agregó un nuevo cliente' });
     } catch (error) {
         // en caso de error, next
-        console.log(error);
+        res.send(error);
         next();
     }
 }
@@ -22,7 +22,8 @@ exports.mostrarClientes = async (req, res, next) => {
         const clientes = await Clientes.find({});
         res.json(clientes);
     } catch (error) {
-        console.log(error);
+        //console.log(error);
+        res.send(error)
         next();
     }
 }
@@ -47,7 +48,8 @@ exports.actualizarCliente = async (req, res, next) => {
         const cliente = await Clientes.findOneAndUpdate({ _id : req.params.idCliente }, req.body, { new: true }) // este callback es true porque retorna el nuevo obj
         res.json(cliente);
     }catch(error){
-        console.log(error);
+        res.send(error);
+        //console.log(error);
         next();
     }
 }
@@ -60,7 +62,8 @@ exports.eliminarCliente = async (req, res, next) => {
         await Clientes.findOneAndDelete({ _id: req.params.idCliente });
         res.json({ mensaje: 'Eliminado Correctamente' });
     } catch (error) {
-        console.log(error);
+        res.send(error);
+        //console.log(error);
         next();
     }
 }
